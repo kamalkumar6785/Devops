@@ -14,6 +14,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Pull Docker Image
+      run: |
+        case "${{ github.event.inputs.docker_image }}" in
+          "pytorch") docker pull pytorch ;;
+          "nginx") docker pull nginx ;;
+          "jenkins") docker pull jenkins ;;
+          "alpine") docker pull alpine ;;
+          "mongo") docker pull mongo ;;
+          *) echo "Invalid Docker image selected" ;;
+        esac
+
     - name: Run Docker Image
       run: |
         case "${{ github.event.inputs.docker_image }}" in
