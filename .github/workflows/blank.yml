@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       docker_image:
-        description: 'Select Docker image'
+        description: 'Select Docker image __'
         required: true
         default: 'pytorch'
         options: [ 'pytorch', 'nginx', 'jenkins', 'alpine', 'mongo' ]
