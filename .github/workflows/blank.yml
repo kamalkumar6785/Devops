@@ -1,37 +1,36 @@
-name: Choose and Run Docker Image
+name: Docker Image Selection and Deployment
 
 on:
   workflow_dispatch:
     inputs:
-      docker_image:
-        description: 'Select Docker image __'
+      docker_image_choice:
+        description: 'Choose a Docker image'
         required: true
-        default: 'pytorch'
-        options: [ 'pytorch', 'nginx', 'jenkins', 'alpine', 'mongo' ]
+        default: 'node'
+        options:
+          - 'node'
+          - 'mysql'
+          - 'jenkins'
+          - 'nginx'
+          - 'openjdk'
 
 jobs:
-  choose_and_run:
+  build-and-run-docker:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Pull Docker Image
-      run: |
-        case "${{ github.event.inputs.docker_image }}" in
-          "pytorch") docker pull pytorch ;;
-          "nginx") docker pull nginx ;;
-          "jenkins") docker pull jenkins ;;
-          "alpine") docker pull alpine ;;
-          "mongo") docker pull mongo ;;
-          *) echo "Invalid Docker image selected" ;;
-        esac
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Run Docker Image
-      run: |
-        case "${{ github.event.inputs.docker_image }}" in
-          "pytorch") docker run pytorch ;;
-          "nginx") docker run nginx ;;
-          "jenkins") docker run jenkins ;;
-          "alpine") docker run alpine ;;
-          "mongo") docker run mongo ;;
-          *) echo "Invalid Docker image selected" ;;
-        esac
+      - name: Echo chosen Docker image
+        run: echo ${{ github.event.inputs.docker_image_choice }}
+
+      - name: Pull and Run Docker container
+        run: |
+          case "${{ github.event.inputs.docker_image_choice }}" in
+            "node") docker pull node:latest && docker run -d node:latest ;;
+            "mysql") docker pull mysql:latest && docker run -d mysql:latest ;;
+            "jenkins") docker pull jenkins/jenkins:latest && docker run -d jenkins/jenkins:latest ;;
+            "nginx") docker pull nginx:latest && docker run -d nginx:latest ;;
+            "openjdk") docker pull openjdk:latest && docker run -d openjdk:latest ;;
+            *) echo "Invalid Docker image choice" ;;
+          esac
