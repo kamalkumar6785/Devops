@@ -1,4 +1,4 @@
-name: Docker Image Selection and Deployment
+name: Choose and Run Docker Image
 
 on:
   workflow_dispatch:
