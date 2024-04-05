@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       docker_image:
-        description: 'Select Docker an image out of [pytorch, nginx, jenkins, alpine, mysql]'
+        description: 'Select Docker an image out of [ pytorch, nginx, jenkins, alpine, mysql ]'
         required: true
         default: 'pytorch'
         options: ['pytorch', 'nginx', 'jenkins', 'alpine', 'mysql']
