@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       docker_image:
-        description: 'Select Docker an image out of [ pytorch, nginx, jenkins, alpine, mysql ]'
+        description: 'Select Docker image'
         required: true
         default: 'pytorch'
-        options: ['pytorch', 'nginx', 'jenkins', 'alpine', 'mysql']
+        options: [ 'pytorch', 'nginx', 'jenkins', 'alpine', 'mongo' ]
 
 jobs:
   choose_and_run:
@@ -21,6 +21,6 @@ jobs:
           "nginx") docker run nginx ;;
           "jenkins") docker run jenkins ;;
           "alpine") docker run alpine ;;
-          "mysql") docker run mysql ;;
+          "mongo") docker run mongo ;;
           *) echo "Invalid Docker image selected" ;;
         esac
