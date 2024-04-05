@@ -1,0 +1,26 @@
+name: Choose and Run Docker Image
+
+on:
+  workflow_dispatch:  # Trigger manually
+
+jobs:
+  choose_and_run:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Choose Docker Image
+      id: select_image
+      run: |
+        echo "Please select a Docker image to run:"
+        select image in "image1" "image2" "image3" "image4" "image5"
+        do
+          case $image in
+            "image1"|"image2"|"image3"|"image4"|"image5") echo "Selected Docker image: $image"; break;;
+            *) echo "Invalid option";;
+          esac
+        done
+        echo "::set-output name=docker_image::$image"
+      
+    - name: Run Docker Image
+      run: |
+        docker run ${{ steps.select_image.outputs.docker_image }}
