@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       docker_image_choice:
-        description: 'Choose a Docker image from pytorch, mongo, jenkins, php, ubuntu'
+        description: 'Choose a Docker image from alpine, mongo, jenkins, php, ubuntu'
         required: true
-        default: 'pytorch'
+        default: 'alpine'
         options:
-          - 'pytorch'
+          - 'alpine'
           - 'mongo'
           - 'jenkins'
           - 'php'
@@ -27,7 +27,7 @@ jobs:
       - name: Pull and Run Docker container
         run: |
           case "${{ github.event.inputs.docker_image_choice }}" in
-            "pytorch") docker pull pytorch:latest && docker run -d pytorch:latest ;;
+            "alpine") docker pull alpine:latest && docker run -d alpine:latest ;;
             "mongo") docker pull mongo:latest && docker run -d mongo:latest ;;
             "jenkins") docker pull jenkins/jenkins:latest && docker run -d jenkins/jenkins:latest ;;
             "php") docker pull php:latest && docker run -d php:latest ;;
