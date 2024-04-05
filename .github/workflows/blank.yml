@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       docker_image_choice:
-        description: 'Choose a Docker image'
+        description: 'Choose a Docker image from pytorch, mongo, jenkins, php, ubuntu'
         required: true
-        default: 'node'
+        default: 'pytorch'
         options:
-          - 'node'
-          - 'mysql'
+          - 'pytorch'
+          - 'mongo'
           - 'jenkins'
-          - 'nginx'
-          - 'openjdk'
+          - 'php'
+          - 'ubuntu'
 
 jobs:
   build-and-run-docker:
@@ -27,10 +27,10 @@ jobs:
       - name: Pull and Run Docker container
         run: |
           case "${{ github.event.inputs.docker_image_choice }}" in
-            "node") docker pull node:latest && docker run -d node:latest ;;
-            "mysql") docker pull mysql:latest && docker run -d mysql:latest ;;
+            "pytorch") docker pull pytorch:latest && docker run -d pytorch:latest ;;
+            "mongo") docker pull mongo:latest && docker run -d mongo:latest ;;
             "jenkins") docker pull jenkins/jenkins:latest && docker run -d jenkins/jenkins:latest ;;
-            "nginx") docker pull nginx:latest && docker run -d nginx:latest ;;
-            "openjdk") docker pull openjdk:latest && docker run -d openjdk:latest ;;
+            "php") docker pull php:latest && docker run -d php:latest ;;
+            "ubuntu") docker pull ubuntu:latest && docker run -d ubuntu:latest ;;
             *) echo "Invalid Docker image choice" ;;
           esac
